@@ -9,6 +9,44 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// user modal '
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  posts     Post[]
+}
+
+// category
+model Category {
+  id        String   @id @default(cuid())
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  Post Post[]
+}
+
+// post modal
+model Post {
+  id           String    @id @default(cuid())
+  title        String
+  content      String
+  image_url    String
+  published    Boolean   @default(false)
+  publish_date DateTime?
+  author       User      @relation(fields: [authorId], references: [id])
+  authorId     String
+  categories   Category  @relation(fields: [categoryId], references: [id])
+  categoryId   String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
