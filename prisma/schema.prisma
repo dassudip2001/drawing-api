@@ -9,7 +9,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
@@ -18,7 +18,7 @@ datasource db {
 // user modal '
 model User {
   id        String   @id @default(cuid())
-  email     String   
+  email     String   @unique
   name      String?
   password  String
   role    Role     @default(USER)
