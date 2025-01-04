@@ -13,15 +13,13 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
-
 // user modal '
 model User {
   id        String   @id @default(cuid())
   email     String   @unique
   name      String?
   password  String
-  role    Role     @default(USER)
+  role      Role     @default(USER)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   posts     Post[]
@@ -33,27 +31,26 @@ model Category {
   name      String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  Post Post[]
+  Post      Post[]
 }
 
 // post modal
 model Post {
-  id           String    @id @default(cuid())
-  title        String
-  accession_number String
-  content      String?
-  image_url    String?
-  published    Boolean   @default(false)
-  publish_date DateTime?
-  author       User      @relation(fields: [authorId], references: [id])
-  authorId     String
-  categories   Category  @relation(fields: [categoryId], references: [id])
-  categoryId   String
+  id               String    @id @default(cuid())
+  title            String
+  accession_number String    @unique
+  content          String?
+  image_url        String?
+  published        Boolean   @default(false)
+  publish_date     DateTime?
+  author           User      @relation(fields: [authorId], references: [id])
+  authorId         String
+  categories       Category  @relation(fields: [categoryId], references: [id])
+  categoryId       String
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
-
 
 enum Role {
   USER
