@@ -1,0 +1,15 @@
+{
+    "keep": {
+        "days": true,
+        "amount": 30
+    },
+    "auditLog": "C:\\Users\\sudip\\OneDrive\\Documents\\techindek\\express\\logs\\.3a58c0b9e9c9dbf3b7e95fc77b8bb516cd016315-audit.json",
+    "files": [
+        {
+            "date": 1736706706339,
+            "name": "C:\\Users\\sudip\\OneDrive\\Documents\\techindek\\express\\logs\\error-2025-01-13.log",
+            "hash": "7c1980f8c4b3f5d0ceab511da6adc44c3fcce6ad294b0922c2841a811c8d98cc"
+        }
+    ],
+    "hashType": "sha256"
+}
