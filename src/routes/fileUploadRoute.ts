@@ -1,20 +1,38 @@
-import express from "express";
-import multer from "multer";
+import * as express from 'express';
+import multer, { FileFilterCallback } from 'multer';
+import path from 'path';
 import { uploadFile } from "../controllers/fileUploadController";
+import { Router } from 'express';
 
-const fileUploadRouter: express.Router = express.Router();
+const fileUploadRouter = Router();
 
 // Multer setup for file uploads
+
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Temporary storage location
+  destination: (_req: Request, _file: Express.Multer.File, cb: (error: Error | null, destination: string) => void) => {
+    cb(null, 'uploads/');
   },
-  filename: (req, file, cb) => {
+  filename: (_req: Request, file: Express.Multer.File, cb: (error: Error | null, filename: string) => void) => {
     cb(null, `${Date.now()}-${file.originalname}`);
-  },
+  }
 });
 
-const upload = multer({ storage });
+const fileFilter = (_req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+  const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+  if (allowedTypes.includes(file.mimetype)) {
+    cb(null, true);
+  } else {
+    cb(new Error('Invalid file type'));
+  }
+};
+
+const upload = multer({ 
+  storage, 
+  fileFilter,
+  limits: {
+    fileSize: 5 * 1024 * 1024 // 5MB
+  }
+ });
 
 // Define routes
 fileUploadRouter.post("/upload", upload.single("file"), uploadFile);
