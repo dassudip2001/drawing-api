@@ -14,7 +14,8 @@ export const all = async (req: Request, res: Response): Promise<void> => {
     const data = await allPosts();
     res.json(data);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
@@ -28,7 +29,8 @@ export const create = async (
     const category = await createPost(req.body);
     res.status(201).json(category);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
@@ -40,7 +42,8 @@ export const find = async (
     const data = await findPostById(req.params.id);
     res.json(data);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
@@ -53,7 +56,8 @@ export const update = async (
 
     res.json({ message: "Update Category" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
 
@@ -65,6 +69,7 @@ export const destroy = async (
     await deletePost(req.params.id);
     res.json({ message: "Delete Category" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    const errorMessage = error instanceof Error ? error.message : 'An unknown error occurred';
+    res.status(500).json({ message: errorMessage });
   }
 };
